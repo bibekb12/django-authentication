@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from emailapp import views as email_view
 from django.contrib.auth import views as auth
+from drfemail.views import RegisterUserView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,4 +31,5 @@ urlpatterns = [
         name="logout",
     ),
     path("register/", email_view.register, name="register"),
+    path("api/", include("drfemail.urls")),
 ]

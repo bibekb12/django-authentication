@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "emailapp",
     "crispy_forms",
     "crispy_bootstrap4",
+    "drfemail",
+    "celery",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -133,4 +136,14 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "bhandaribibek27@gmail.com"
-EMAIL_HOST_PASSWORD = "pjpt lpbq ksfg jeun"
+EMAIL_HOST_PASSWORD = "ggjo jajw fnue fbhm"
+
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "Asia/Nepal"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
