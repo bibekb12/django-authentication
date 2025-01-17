@@ -25,8 +25,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
         )
-        send_registration_email_notification(
-            user.username, user.email, validated_data["password"]
+        send_registration_email_notification.apply_async(
+            args=[user.username, user.email, validated_data["password"]], countdown=10
         )
         return user
 
