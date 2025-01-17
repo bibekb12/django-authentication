@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "drfemail",
     "celery",
     "django_celery_results",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -138,12 +139,10 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = "bhandaribibek27@gmail.com"
 EMAIL_HOST_PASSWORD = "ggjo jajw fnue fbhm"
 
-# Celery settings
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-CELERY_ACCEPT_CONTENT = ["application/json"]
+# Celery settings# filepath: /d:/django/djangoproject/settings.py
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = "Asia/Nepal"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_TIMEZONE = "UTC"

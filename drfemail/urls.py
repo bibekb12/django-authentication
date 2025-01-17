@@ -7,5 +7,5 @@ urlpatterns = [
         RegisterUserView.as_view({"post": "create", "get": "list"}),
         name="register",
     ),
-    path("delete/<int:pk>", RegisterUserView.as_view({"delete": "destroy"})),
+    path("register/delete/<int:pk>", RegisterUserView.as_view({"delete": "destroy"})),
 ]

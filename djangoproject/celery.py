@@ -23,19 +23,22 @@
 #     print(f"Scheduled tasks: {scheduled_tasks}")
 #     print(f"Reserved tasks: {reserved_tasks}")
 
+from __future__ import absolute_import, unicode_literals
 import os
-from django.conf import settings
+from django.conf import settings  # This line is need debugging
 from celery import Celery
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangoproject.settings")
 
 app = Celery("djangoproject")
 
-# app.config_from_object(f"django.conf:{settings.__name__}", namespace="CELERY")
-
-app.autodiscover_tasks()
+app.config_from_object("django.conf:settings", namespace="CELERY")
 
 
-@app.task(bind=True, ignore_reasult=True)
-def debug_task(self):
-    print(f"Request:{self.request!r}")
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+app.conf.broker_connection_retry_on_startup = True
+
+app.conf.broker_connection_max_retries = 5
+
+logger = app.log.get_default_logger()

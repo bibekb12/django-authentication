@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers, status
-from rest_framework.response import Response
-
-from drfemail.tasks import send_mail
+from drfemail.tasks import (
+    send_registration_email_notification,
+    send_delete_email_notification,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,9 +25,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             password=validated_data["password"],
         )
-        send_mail.apply_async(
-            args=(user.username, user.email, validated_data["password"]),
-            countdown=5,
+        send_registration_email_notification(
+            user.username, user.email, validated_data["password"]
         )
         return user
 
@@ -39,5 +39,16 @@ class UserDeleteSerializer(serializers.ModelSerializer):
 
     def delete(self, pk):
         instance = User.objects.get(pk=pk)
-        instance.delete()
-        return instance
+        username = instance.username
+        email = instance.email
+        print(f"{username}, {email}")
+        breakpoint()
+
+        try:
+            send_delete_email_notification(username, email)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+        # return instance.delete()
+
+    def to_representation(self, instance):
+        return {"deleted"}

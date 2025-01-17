@@ -1,6 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from .serializers import UserSerializer, UserCreateSerializer, UserDeleteSerializer
 from django.contrib.auth.models import User
+from drfemail.tasks import send_delete_email_notification
+from rest_framework.response import Response
 
 
 class RegisterUserView(ModelViewSet):
@@ -10,8 +12,15 @@ class RegisterUserView(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == "GET":
             return UserSerializer
-        elif self.action == "POST":
+        elif self.request.method == "POST":
             return UserCreateSerializer
-        elif self.action == "DELETE":
+        elif self.request.method == "DELETE":
             return UserDeleteSerializer
         return UserSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        print(instance)
+        send_delete_email_notification.delay(instance.username, instance.email)
+        # self.perform_destroy(instance)
+        return Response("deleted")
