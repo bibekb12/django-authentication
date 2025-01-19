@@ -48,6 +48,7 @@ INSTALLED_APPS_ADDITIONAL = [
     "django_celery_beat",
     "simple_history",
     "history_app",
+    "drf_yasg",
 ]
 
 INSTALLED_APPS = INSTALLED_APPS_INBUILT + INSTALLED_APPS_ADDITIONAL
