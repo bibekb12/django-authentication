@@ -16,19 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
-from emailapp import views as email_view
 from django.contrib.auth import views as auth
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("emailapp.urls")),
-    path("login/", email_view.login, name="login"),
     path(
         "logout/",
         auth.LogoutView.as_view(template_name="index.html"),
         name="logout",
     ),
-    path("register/", email_view.register, name="register"),
     path("api/", include("drfemail.urls")),
 ]

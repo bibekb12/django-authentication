@@ -1,8 +1,9 @@
+from rest_framework import serializers
+
 from django.contrib.auth.models import User
-from rest_framework import serializers, status
 from drfemail.tasks import (
-    send_registration_email_notification,
     send_delete_email_notification,
+    send_registration_email_notification,
 )
 
 

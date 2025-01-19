@@ -1,8 +1,10 @@
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from .serializers import UserSerializer, UserCreateSerializer, UserDeleteSerializer
+
 from django.contrib.auth.models import User
 from drfemail.tasks import send_delete_email_notification
-from rest_framework.response import Response
+
+from .serializers import UserCreateSerializer, UserDeleteSerializer, UserSerializer
 
 
 class RegisterUserView(ModelViewSet):

@@ -24,9 +24,12 @@
 #     print(f"Reserved tasks: {reserved_tasks}")
 
 from __future__ import absolute_import, unicode_literals
+
 import os
-from django.conf import settings  # This line is need debugging
+
 from celery import Celery
+
+from django.conf import settings  # This line is need debugging
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "djangoproject.settings")
 

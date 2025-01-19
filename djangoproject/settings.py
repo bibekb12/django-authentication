@@ -40,13 +40,14 @@ INSTALLED_APPS_INBUILT = [
 ]
 
 INSTALLED_APPS_ADDITIONAL = [
-    "emailapp",
     "crispy_forms",
     "crispy_bootstrap4",
     "drfemail",
     "celery",
     "django_celery_results",
     "django_celery_beat",
+    "simple_history",
+    "history_app",
 ]
 
 INSTALLED_APPS = INSTALLED_APPS_INBUILT + INSTALLED_APPS_ADDITIONAL
@@ -89,7 +90,15 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
+    "history_db": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "history_db",
+        "USER": "bibek_user",
+        "PASSWORD": "1234",
+        "HOST": "localhost",
+        "PORT": "5432",
+    },
 }
 
 
@@ -98,16 +107,18 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        ),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": ("django.contrib.auth.password_validation.MinimumLengthValidator"),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": ("django.contrib.auth.password_validation.CommonPasswordValidator"),
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": ("django.contrib.auth.password_validation.NumericPasswordValidator"),
     },
 ]
 
@@ -137,6 +148,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 EMAIL_HOST = "smtp.gmail.com"
 # EMAIL_USE_TLS = True
 # EMAIL_PORT = 587
