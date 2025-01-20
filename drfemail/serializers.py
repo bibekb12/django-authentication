@@ -6,6 +6,34 @@ from drfemail.tasks import (
     send_registration_email_notification,
 )
 
+from drfemail.models import UserInformation
+
+
+class UserInformationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInformation
+        fields = "__all__"
+
+
+class CreateUserInformationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInformation
+        fields = "__all__"
+
+    def create(self, validated_data):
+        userid = self.context["request"].user.id
+        # print(userid, "-----------------")
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            user=userid,
+        )
+        return user
+
+    def to_representation(self, instance):
+        return {"created user information"}
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

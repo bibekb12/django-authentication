@@ -20,7 +20,6 @@ from django.contrib.auth import views as auth
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -30,7 +29,6 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="admin@gmail.com"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
@@ -46,9 +44,14 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path(
-        "logout/",
+        "accounts/logout/",
         auth.LogoutView.as_view(template_name="index.html"),
         name="logout",
+    ),
+    path(
+        "accounts/login/",
+        auth.LogoutView.as_view(template_name="index.html"),
+        name="login",
     ),
     path("emailapi/", include("drfemail.urls")),
 ]

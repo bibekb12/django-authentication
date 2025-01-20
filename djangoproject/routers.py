@@ -14,17 +14,17 @@ class HistoryRouter:
         """
         Attempts to read auth and contenttypes models go to auth_db.
         """
-        if model._meta.app_label in self.history_app:
+        if model._meta.app_label in self.history_app:  # noqa: SLF001
             return "history_db"
-        return None
+        return "default"
 
     def db_for_write(self, model, **hints):
         """
         Attempts to write auth and contenttypes models go to auth_db.
         """
-        if model._meta.app_label in self.history_app:
+        if model._meta.app_label in self.history_app:  # noqa: SLF001
             return "history_db"
-        return None
+        return "default"
 
     def allow_relation(self, obj1, obj2, **hints):
         """
@@ -32,8 +32,8 @@ class HistoryRouter:
         involved.
         """
         if (
-            obj1._meta.app_label in self.history_app
-            or obj2._meta.app_label in self.history_app
+            obj1._meta.app_label in self.history_app  # noqa: SLF001
+            or obj2._meta.app_label in self.history_app  # noqa: SLF001
         ):
             return True
         return None

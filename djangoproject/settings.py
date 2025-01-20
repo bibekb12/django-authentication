@@ -87,10 +87,16 @@ WSGI_APPLICATION = "djangoproject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# AUTH_USER_MODEL = "drfemail.User"
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "django_db",
+        "USER": "bibek_user",
+        "PASSWORD": "1234",
+        "HOST": "localhost",
+        "PORT": "5432",
     },
     "history_db": {
         "ENGINE": "django.db.backends.postgresql",
@@ -123,6 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DATABASE_ROUTERS = ["djangoproject.routers.HistoryRouter"]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -148,6 +155,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# LOGIN_REDIRECT_URL = "/"
+# LOGOUT_REDIRECT_URL = "/"
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
@@ -165,3 +175,10 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "UTC"
+
+# for history app
+HISTORY_DB_NAME = "history_db"
+HISTORY_DB_USER = "bibek_user"
+HISTORY_DB_PASSWORD = "1234"
+HISTORY_DB_HOST = "localhost"
+HISTORY_DB_PORT = "5432"
